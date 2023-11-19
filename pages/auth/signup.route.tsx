@@ -30,10 +30,8 @@ const SignupPage = () => {
             password: "123456",
           });
         }}
+        isSubmitting={signupMutation.isLoading}
       />
-      {signupMutation.isLoading}
-      {signupMutation.isError}
-
       <button onClick={getUsers}></button>
     </div>
   );
