@@ -1,6 +1,7 @@
 import React from "react";
 import { useMutation, useQuery } from "react-query";
 import { api } from "@/lib/client/api";
+import { SignupForm } from "@/features/auth/SignupForm";
 
 const SignupPage = () => {
   const signupMutation = useMutation(
@@ -22,18 +23,17 @@ const SignupPage = () => {
 
   return (
     <div>
-      {signupMutation.isLoading}
-      {signupMutation.isError}
-      <button
-        onClick={() => {
+      <SignupForm
+        onSubmit={() => {
           signupMutation.mutate({
             email: "fakeuser222333d@gmail.com",
             password: "123456",
           });
         }}
-      >
-        OK
-      </button>
+      />
+      {signupMutation.isLoading}
+      {signupMutation.isError}
+
       <button onClick={getUsers}></button>
     </div>
   );

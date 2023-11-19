@@ -2,6 +2,9 @@ import { AppProps } from "next/app";
 import React, { createContext } from "react";
 import Head from "next/head";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { CssVarsProvider } from "@mui/joy/styles";
+import CssBaseline from "@mui/joy/CssBaseline";
+import "@fontsource/inter";
 
 export const GlobalContext = createContext<object>({});
 
@@ -14,7 +17,10 @@ const App = ({ Component, pageProps }: AppProps) => {
         <Head>
           <title>DS Fullstack</title>
         </Head>
-        <Component {...pageProps} />
+        <CssVarsProvider defaultMode="dark">
+          <CssBaseline />
+          <Component {...pageProps} />
+        </CssVarsProvider>
       </GlobalContext.Provider>
     </QueryClientProvider>
   );
