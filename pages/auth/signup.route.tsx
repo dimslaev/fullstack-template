@@ -1,13 +1,14 @@
 import React from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 import { api } from "@/lib/client/api";
 import { SignupForm } from "@/features/auth/SignupForm";
+import Box from "@mui/joy/Box";
 
 const SignupPage = () => {
   const signupMutation = useMutation(
     (values: { password: string; email: string }) => {
       return api
-        .post(values, "/auth/signin")
+        .post(values, "/api/auth/signup")
         .res()
         .then((r) => {
           console.log(r);
@@ -15,25 +16,15 @@ const SignupPage = () => {
     }
   );
 
-  const getUsers = () => {
-    return api.get("/user").res((r) => {
-      console.log(r);
-    });
-  };
-
   return (
-    <div>
+    <Box sx={{ pt: [8, 8, 16] }}>
       <SignupForm
-        onSubmit={() => {
-          signupMutation.mutate({
-            email: "fakeuser222333d@gmail.com",
-            password: "123456",
-          });
+        onSubmit={(values) => {
+          signupMutation.mutate(values);
         }}
         isSubmitting={signupMutation.isLoading}
       />
-      <button onClick={getUsers}></button>
-    </div>
+    </Box>
   );
 };
 

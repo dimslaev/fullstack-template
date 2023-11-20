@@ -4,10 +4,7 @@ import FormControl from "@mui/joy/FormControl";
 import FormLabel from "@mui/joy/FormLabel";
 import FormHelperText from "@mui/joy/FormHelperText";
 
-type FieldWrapperProps = Omit<
-  React.ComponentProps<typeof FormControl>,
-  "error"
-> & {
+type Props = Omit<React.ComponentProps<typeof FormControl>, "error"> & {
   label?: string;
   children: React.ReactNode;
   error?: FieldError | undefined;
@@ -15,11 +12,12 @@ type FieldWrapperProps = Omit<
   description?: string;
 };
 
-export const FieldWrapper = (props: FieldWrapperProps) => {
-  const { label, error, children, ...rest } = props;
+export const FieldWrapper = (props: Props) => {
+  const { label, error, children, required, ...rest } = props;
+
   return (
     <FormControl error={!!error} {...rest}>
-      <FormLabel>{label}</FormLabel>
+      <FormLabel required={required}>{label}</FormLabel>
       {children}
       {error?.message && <FormHelperText>{error.message}</FormHelperText>}
     </FormControl>

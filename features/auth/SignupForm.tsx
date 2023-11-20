@@ -1,8 +1,10 @@
-import * as z from "zod";
 import { Form } from "@/components/form/Form";
 import { FieldWrapper } from "@/components/form/FieldWrapper";
+import * as z from "zod";
+
 import Button from "@mui/joy/Button";
 import Box from "@mui/joy/Box";
+import Stack from "@mui/joy/Stack";
 import Input from "@mui/joy/Input";
 
 const schema = z.object({
@@ -10,28 +12,25 @@ const schema = z.object({
   password: z.string().min(1, "Required"),
 });
 
-type SignupValues = {
-  email: string;
-  password: string;
-};
+type Values = z.infer<typeof schema>;
 
-type SignupFormProps = {
-  onSubmit: (values: any) => void;
+type Props = {
+  onSubmit: (values: Values) => void;
   isSubmitting: boolean;
 };
 
-export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
+export const SignupForm = ({ onSubmit, isSubmitting }: Props) => {
   return (
-    <Box>
-      <Form<SignupValues, typeof schema> onSubmit={onSubmit} schema={schema}>
+    <Box sx={{ mx: "auto", p: 2, maxWidth: 460 }}>
+      <Form<Values, typeof schema> onSubmit={onSubmit} schema={schema}>
         {({ register, formState }) => (
-          <>
+          <Stack spacing={2}>
             <FieldWrapper
               required
               label="Email"
               error={formState.errors["email"]}
             >
-              <Input type="email" {...register("email")} />
+              <Input type="text" {...register("email")} />
             </FieldWrapper>
 
             <FieldWrapper
@@ -45,7 +44,7 @@ export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
             <Button loading={isSubmitting} type="submit">
               Sign up
             </Button>
-          </>
+          </Stack>
         )}
       </Form>
     </Box>
