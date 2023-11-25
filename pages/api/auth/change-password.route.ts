@@ -1,20 +1,33 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import * as authController from "@/pages/api/auth/_controller";
+import * as bcrypt from "bcryptjs";
+import { sendToken, verifyToken2 } from "@/lib/server/auth";
+import { isValid } from "@/lib/server/utils";
+import { prisma } from "@/lib/server/prisma";
+import { ChangePasswordSchema } from "@/pages/api/auth/_schemas";
 
 export default async function handler(
-  req: NextApiRequest & { id: string },
+  req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { method } = req;
+  if (req.method !== "POST") {
+    return res.status(405).json({});
+  }
+
+  if (!isValid(ChangePasswordSchema, req.body)) {
+    return res.status(400).json({});
+  }
 
   try {
-    switch (method) {
-      case "POST":
-        await authController.changePassword(req, res);
-        break;
-      default:
-        res.status(405).json({});
-    }
+    const userToken = await verifyToken2(req);
+
+    const user = await prisma.user.update({
+      where: { id: userToken?.id },
+      data: {
+        password: bcrypt.hashSync(req.body.password, 8),
+      },
+    });
+
+    await sendToken(res, 200, user);
   } catch (e) {
     console.log(e);
     res.status(500).json(e);

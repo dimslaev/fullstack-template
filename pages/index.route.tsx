@@ -1,7 +1,3 @@
-import React from "react";
+import SigninPage from "@/pages/auth/signin.route";
 
-const HomePage = () => {
-  return <div>Hello</div>;
-};
-
-export default HomePage;
+export default SigninPage;

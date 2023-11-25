@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import * as bcrypt from "bcryptjs";
-import { sendToken } from "@/lib/server/auth";
+import { emailToken } from "@/lib/server/email";
 import { isValid } from "@/lib/server/utils";
 import { prisma } from "@/lib/server/prisma";
-import { SigninSchema } from "@/pages/api/auth/_schemas";
+import { ResetPasswordSchema } from "@/pages/api/auth/_schemas";
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,7 +12,7 @@ export default async function handler(
     return res.status(405).json({});
   }
 
-  if (!isValid(SigninSchema, req.body)) {
+  if (!isValid(ResetPasswordSchema, req.body)) {
     return res.status(400).json({});
   }
 
@@ -22,16 +21,9 @@ export default async function handler(
       where: { email: req.body.email as string },
     });
 
-    const passwordsMatch = await bcrypt.compare(
-      req.body.password,
-      user?.password || ""
-    );
+    await emailToken(user);
 
-    if (!passwordsMatch) {
-      return res.status(401).json({});
-    }
-
-    await sendToken(res, 200, user);
+    res.status(200).json({});
   } catch (e) {
     console.log(e);
     res.status(500).json(e);
