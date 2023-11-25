@@ -1,28 +1,32 @@
-import { Box, Typography } from "@mui/joy";
+import { Sheet, Typography } from "@mui/joy";
 
 export const AuthFormBox = ({
   title,
   children,
   ...rest
-}: React.ComponentProps<typeof Box> & { title: string }) => {
+}: React.ComponentProps<typeof Sheet> & { title: string }) => {
   return (
-    <Box
+    <Sheet
       sx={{
         width: "100%",
-        maxWidth: 420,
-        p: {
-          xs: 2,
-          md: 4,
-          lg: 6,
-        },
+        maxWidth: 360,
+        mx: "auto",
+        my: [4, 4, 8],
+        py: 4,
+        px: 4,
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        borderRadius: "sm",
+        boxShadow: "md",
       }}
-      {...rest}
+      variant="outlined"
     >
-      <Typography level="h2" textAlign="center" mb={2}>
+      <Typography level="h3" textAlign="center" mb={2}>
         {title}
       </Typography>
 
       {children}
-    </Box>
+    </Sheet>
   );
 };

@@ -1,3 +1,3 @@
-export default function Page() {
-  return <div>Hello</div>;
-}
+import SigninPage from "@/pages/auth/signin.route";
+
+export default SigninPage;
