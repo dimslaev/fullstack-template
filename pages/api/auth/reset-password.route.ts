@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import * as bcrypt from "bcryptjs";
-import { sendToken } from "@/lib/server/auth";
+import { emailToken } from "@/lib/server/email";
 import { isValid } from "@/lib/server/utils";
 import { prisma } from "@/lib/server/prisma";
-import { SignupSchema } from "@/lib/client/schemas";
+import { ResetPasswordSchema } from "@/lib/client/schemas";
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,20 +12,18 @@ export default async function handler(
     return res.status(405).json({});
   }
 
-  if (!isValid(SignupSchema, req.body)) {
+  if (!isValid(ResetPasswordSchema, req.body)) {
     return res.status(400).json({});
   }
 
   try {
-    const user = await prisma.user.create({
-      data: {
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 8),
-        role: "USER",
-      },
+    const user = await prisma.user.findUniqueOrThrow({
+      where: { email: req.body.email as string },
     });
 
-    sendToken(res, 201, user);
+    await emailToken(user);
+
+    res.status(200).json({});
   } catch (e) {
     console.log(e);
     res.status(500).json(e);

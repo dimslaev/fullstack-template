@@ -1,10 +1,10 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import { type NextRequest } from "next/server";
-import { NextApiResponse } from "next";
 import { serialize } from "cookie";
 import { nanoid } from "nanoid";
 import { SignJWT, jwtVerify } from "jose";
-import { UserJwtPayload } from "../interfaces";
-import { USER_TOKEN, USER_TOKEN_TIME, USER_TOKEN_SECONDS } from "../constants";
+import { UserJwtPayload } from "./interfaces";
+import { USER_TOKEN, USER_TOKEN_TIME, USER_TOKEN_SECONDS } from "./constants";
 import { User } from "@prisma/client";
 
 export const createToken = async (id: string, email: string) => {
@@ -32,6 +32,22 @@ export const verifyToken = async (req: NextRequest) => {
   }
 };
 
+export const verifyToken2 = async (req: NextApiRequest) => {
+  const token = req.headers.authorization;
+
+  if (!token) return;
+
+  try {
+    const verified = await jwtVerify<UserJwtPayload>(
+      token,
+      new TextEncoder().encode(process.env.JWT_SECRET)
+    );
+    return verified.payload;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const sendToken = async (
   res: NextApiResponse,
   status: number,
@@ -44,5 +60,5 @@ export const sendToken = async (
     maxAge: USER_TOKEN_SECONDS,
   });
   res.setHeader("Set-Cookie", cookie);
-  res.status(status).json({});
+  res.status(status).json({ ...user, password: undefined });
 };
