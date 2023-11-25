@@ -3,7 +3,7 @@ import * as bcrypt from "bcryptjs";
 import { sendToken } from "@/lib/server/auth";
 import { isValid } from "@/lib/server/utils";
 import { prisma } from "@/lib/server/prisma";
-import { SignupSchema } from "@/lib/client/schemas";
+import { SignupSchema } from "@/pages/api/auth/_schemas";
 
 export default async function handler(
   req: NextApiRequest,

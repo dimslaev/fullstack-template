@@ -35,7 +35,7 @@ export const emailToken = async (user: User) => {
   const token = await createToken(user.id, user.email);
   sendEmail({
     to: user.email,
-    subject: "Your token",
+    subject: "Change password",
     html: `<a href="${BASE_URL}/auth/change-password?token=${token}" target="_blank">Change Password</a>`,
   });
 };

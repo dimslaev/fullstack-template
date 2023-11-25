@@ -6,7 +6,7 @@ import {
   TSigninSchema,
   TChangePasswordSchema,
   TResetPasswordSchema,
-} from "@/lib/client/schemas";
+} from "@/pages/api/auth/_schemas";
 import { api } from "@/lib/client/api";
 import { useRouter } from "next/router";
 
@@ -38,6 +38,25 @@ export const useAuth = () => {
     }
   );
 
+  const signout = useMutation(
+    "/api/auth/signout",
+    () => api.post(null, "/api/auth/signout").json(),
+    {
+      onSuccess: () => {
+        removeUser();
+        push("/");
+      },
+    }
+  );
+
+  const resetPassword = useMutation<
+    UserWithoutPassword,
+    unknown,
+    TResetPasswordSchema
+  >("/api/auth/reset-password", (values) =>
+    api.post(values, "/api/auth/reset-password").json()
+  );
+
   const changePassword = useMutation<
     UserWithoutPassword,
     unknown,
@@ -59,25 +78,6 @@ export const useAuth = () => {
     }
   );
 
-  const resetPassword = useMutation<
-    UserWithoutPassword,
-    unknown,
-    TResetPasswordSchema
-  >("/api/auth/reset-password", (values) =>
-    api.post(values, "/api/auth/reset-password").json()
-  );
-
-  const signout = useMutation(
-    "/api/auth/signout",
-    () => api.post(null, "/api/auth/signout").json(),
-    {
-      onSuccess: () => {
-        removeUser();
-        push("/");
-      },
-    }
-  );
-
   return {
     user,
     setUser,
@@ -85,7 +85,7 @@ export const useAuth = () => {
     signup,
     signin,
     signout,
-    changePassword,
     resetPassword,
+    changePassword,
   };
 };

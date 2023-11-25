@@ -62,3 +62,13 @@ export const sendToken = async (
   res.setHeader("Set-Cookie", cookie);
   res.status(status).json({ ...user, password: undefined });
 };
+
+export const removeToken = async (res: NextApiResponse, status: number) => {
+  const cookie = serialize(USER_TOKEN, "deleted", {
+    httpOnly: true,
+    path: "/",
+    expires: new Date("1970-01-01"),
+  });
+  res.setHeader("Set-Cookie", cookie);
+  res.status(status).json({});
+};

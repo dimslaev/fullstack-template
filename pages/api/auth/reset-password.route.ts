@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { emailToken } from "@/lib/server/email";
 import { isValid } from "@/lib/server/utils";
 import { prisma } from "@/lib/server/prisma";
-import { ResetPasswordSchema } from "@/lib/client/schemas";
+import { ResetPasswordSchema } from "@/pages/api/auth/_schemas";
 
 export default async function handler(
   req: NextApiRequest,

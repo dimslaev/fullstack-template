@@ -3,7 +3,7 @@ import * as bcrypt from "bcryptjs";
 import { sendToken, verifyToken2 } from "@/lib/server/auth";
 import { isValid } from "@/lib/server/utils";
 import { prisma } from "@/lib/server/prisma";
-import { ChangePasswordSchema } from "@/lib/client/schemas";
+import { ChangePasswordSchema } from "@/pages/api/auth/_schemas";
 
 export default async function handler(
   req: NextApiRequest,
