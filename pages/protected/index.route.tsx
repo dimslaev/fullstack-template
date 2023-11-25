@@ -10,7 +10,7 @@ export default function ProtectedPage() {
 
   return (
     <Layout>
-      <AuthFormBox title="You're in" textAlign="center">
+      <AuthFormBox title="You're in">
         <Button
           loading={signout.isLoading}
           onClick={() => {
