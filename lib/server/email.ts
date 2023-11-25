@@ -5,16 +5,21 @@ import { BASE_URL } from "./constants";
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 587,
+  port: 465,
+  secure: true,
   auth: {
+    type: "OAuth2",
     user: process.env.MAILER_USER,
-    pass: process.env.MAILER_PASS,
+    clientId: process.env.MAILER_CLIENT_ID,
+    clientSecret: process.env.MAILER_CLIENT_SECRET,
+    refreshToken: process.env.MAILER_REFRESH_TOKEN,
+    accessToken: process.env.MAILER_ACCESS_TOKEN,
   },
 });
 
 // transporter.verify().then(console.log).catch(console.error);
 
-export const sendEmail = async ({
+export const sendEmail = ({
   to,
   subject,
   html,
@@ -22,20 +27,23 @@ export const sendEmail = async ({
   to: string;
   subject: string;
   html: string;
-}) => {
-  await transporter.sendMail({
+}) =>
+  transporter.sendMail({
     from: `"Custom Next Auth" ${process.env.MAILER_FROM}`,
     to,
     subject,
     html,
   });
-};
 
 export const emailToken = async (user: User) => {
   const token = await createToken(user.id, user.email);
-  sendEmail({
-    to: user.email,
-    subject: "Change password",
-    html: `<a href="${BASE_URL}/auth/change-password?token=${token}" target="_blank">Change Password</a>`,
-  });
+  try {
+    sendEmail({
+      to: user.email,
+      subject: "Change password",
+      html: `<a href="${BASE_URL}/auth/change-password?token=${token}" target="_blank">Change Password</a>`,
+    });
+  } catch (e) {
+    console.log(e);
+  }
 };

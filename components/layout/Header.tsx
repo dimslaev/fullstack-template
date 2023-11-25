@@ -6,7 +6,7 @@ export const Header = (props: React.ComponentProps<typeof Box>) => {
       sx={{
         display: "flex",
         alignItems: "center",
-        py: 2,
+        height: [56, 64, 72],
         px: 2,
         borderBottom: "1px solid",
         borderColor: (theme) => theme.palette.divider,

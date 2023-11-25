@@ -22,9 +22,6 @@ const ResetPasswordForm = () => {
             resetPassword.mutate(values);
           }}
           schema={ResetPasswordSchema}
-          options={{
-            defaultValues: { email: "dimslaev@gmail.com" },
-          }}
         >
           {({ register, formState }) => (
             <Stack spacing={2}>
