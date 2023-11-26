@@ -10,6 +10,7 @@ import { FieldWrapper } from "@/components/form/FieldWrapper";
 import { Layout } from "@/components/layout/Layout";
 import { AuthFormBox } from "@/components/layout/AuthFormBox";
 import { Button, Stack, Input } from "@mui/joy";
+import { ErrorAlert } from "@/components/Alerts";
 
 const ResetPasswordForm = () => {
   const { resetPassword } = useAuth();
@@ -40,6 +41,11 @@ const ResetPasswordForm = () => {
           )}
         </Form>
       </AuthFormBox>
+
+      <ErrorAlert open={resetPassword.isError} onClose={resetPassword.reset}>
+        You need to set up your own email service provider and get your app
+        verified.
+      </ErrorAlert>
     </Layout>
   );
 };

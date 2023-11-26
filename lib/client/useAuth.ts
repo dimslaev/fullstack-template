@@ -53,8 +53,15 @@ export const useAuth = () => {
     UserWithoutPassword,
     unknown,
     TResetPasswordSchema
-  >("/api/auth/reset-password", (values) =>
-    api.post(values, "/api/auth/reset-password").json()
+  >(
+    "/api/auth/reset-password",
+    (values) => api.post(values, "/api/auth/reset-passwords").json(),
+    {
+      onSuccess: () => {
+        removeUser();
+        push("/protected");
+      },
+    }
   );
 
   const changePassword = useMutation<

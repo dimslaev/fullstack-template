@@ -15,10 +15,15 @@ export const SigninSchema = z.object({
 export type TSigninSchema = z.infer<typeof SigninSchema>;
 
 // Change password
-export const ChangePasswordSchema = z.object({
-  password: z.string().min(6),
-  confirmPassword: z.string().min(6),
-});
+export const ChangePasswordSchema = z
+  .object({
+    password: z.string().min(6),
+    confirmPassword: z.string().min(6),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
 export type TChangePasswordSchema = z.infer<typeof ChangePasswordSchema>;
 
 // Reset password

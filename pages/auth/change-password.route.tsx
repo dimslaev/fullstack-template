@@ -9,6 +9,7 @@ import { FieldWrapper } from "@/components/form/FieldWrapper";
 import { Layout } from "@/components/layout/Layout";
 import { AuthFormBox } from "@/components/layout/AuthFormBox";
 import { Button, Stack, Input } from "@mui/joy";
+import { SuccessAlert } from "@/components/Alerts";
 
 const ChangePasswordForm = () => {
   const { changePassword } = useAuth();
@@ -47,6 +48,13 @@ const ChangePasswordForm = () => {
           )}
         </Form>
       </AuthFormBox>
+
+      <SuccessAlert
+        open={changePassword.isSuccess}
+        onClose={changePassword.reset}
+      >
+        Password changed!
+      </SuccessAlert>
     </Layout>
   );
 };
