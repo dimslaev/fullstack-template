@@ -6,7 +6,7 @@ export const fakeUser: User = {
   id: "234",
   email: "fake-user-2@mail.com",
   role: "USER",
-  password: "123",
+  password: "123456",
 };
 
 test.afterAll(async () => {

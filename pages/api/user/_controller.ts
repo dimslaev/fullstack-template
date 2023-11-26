@@ -30,9 +30,10 @@ export const update = async (
   req: NextApiRequest,
   res: NextApiResponse<Omit<User, "password">>
 ) => {
+  const { id, ...data } = req.body;
   const result = await prisma.user.update({
-    where: { id: req.query.id as string },
-    data: req.body,
+    where: { id },
+    data,
   });
   res.json(getUserWithoutPassword(result));
 };

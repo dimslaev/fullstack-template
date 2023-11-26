@@ -6,7 +6,7 @@ export const fakeUser: User = {
   id: "123",
   email: "fake-user@mail.com",
   role: "USER",
-  password: "123",
+  password: "123456",
 };
 
 test.afterAll(async () => {
@@ -30,7 +30,7 @@ test("should create user and return token", async ({ request }) => {
   expect(res.headers()["set-cookie"]).toBeDefined();
 });
 
-// // Rainy
+// Rainy
 test("should not create user if user exists", async ({ request }) => {
   const res = await request.post("/api/auth/signup", {
     data: {
@@ -59,7 +59,7 @@ test("should not login user with wrong credentials", async ({ request }) => {
   const res = await request.post("/api/auth/signin", {
     data: {
       email: fakeUser.email,
-      password: "456",
+      password: "456789",
     },
   });
   expect(res.status()).toBe(401);
