@@ -4,8 +4,6 @@ import { isValid } from "@/lib/server/utils";
 import { prisma } from "@/lib/server/prisma";
 import { ResetPasswordSchema } from "@/pages/api/auth/_schemas";
 
-export const preferredRegion = "eur3";
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
