@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Html, Head, Main, NextScript } from "next/document";
 import { getInitColorSchemeScript } from "@mui/joy/styles";
 

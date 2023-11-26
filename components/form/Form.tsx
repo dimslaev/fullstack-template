@@ -8,7 +8,7 @@ import {
   FormProvider,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ZodType, ZodTypeDef } from "zod";
+import * as z from "zod";
 
 type FormProps<TFormValues extends FieldValues, Schema> = {
   onSubmit: SubmitHandler<TFormValues>;
@@ -19,9 +19,9 @@ type FormProps<TFormValues extends FieldValues, Schema> = {
 
 export const Form = <
   TFormValues extends FieldValues = FieldValues,
-  Schema extends ZodType<unknown, ZodTypeDef, unknown> = ZodType<
+  Schema extends z.ZodType<unknown, z.ZodTypeDef, unknown> = z.ZodType<
     unknown,
-    ZodTypeDef,
+    z.ZodTypeDef,
     unknown
   >,
 >({

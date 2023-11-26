@@ -1,5 +1,4 @@
-import { z } from "zod";
-
+import * as z from "zod";
 // Signup
 export const SignupSchema = z.object({
   email: z.string().email(),

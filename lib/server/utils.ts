@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import { z } from "zod";
+import * as z from "zod";
 
 export const getUserWithoutPassword = (user: User): Omit<User, "password"> => {
   // eslint-disable-next-line
