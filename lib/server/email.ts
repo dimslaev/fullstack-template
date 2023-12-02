@@ -1,7 +1,6 @@
 import nodemailer from "nodemailer";
 import { createToken } from "./auth";
 import { User } from "@prisma/client";
-import { BASE_URL } from "./constants";
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -41,7 +40,7 @@ export const emailToken = async (user: User) => {
     sendEmail({
       to: user.email,
       subject: "Change password",
-      html: `<a href="${BASE_URL}/auth/change-password?token=${token}" target="_blank">Change Password</a>`,
+      html: `<a href="/auth/change-password?token=${token}" target="_blank">Change Password</a>`,
     });
   } catch (e) {
     console.log(e);
