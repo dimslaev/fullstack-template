@@ -11,7 +11,8 @@
     "format": "prettier --write src test",
     "typecheck": "tsc --noEmit",
     "test:api": "playwright test",
-    "analyze": "ANALYZE=true npm run build"
+    "analyze": "ANALYZE=true npm run build",
+    "postinstall": "prisma generate"
   },
   "author": "dimslaev@gmail.com",
   "license": "MIT",
