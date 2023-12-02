@@ -16,7 +16,11 @@ export const useAuth = () => {
   const [user, setUser, removeUser] =
     useLocalStorage<UserWithoutPassword | null>("user", null);
 
-  const signup = useMutation<UserWithoutPassword, unknown, TSignupSchema>(
+  const signup = useMutation<
+    UserWithoutPassword,
+    { message: string },
+    TSignupSchema
+  >(
     "/api/auth/signup",
     (values) => api.post(values, "/api/auth/signup").json(),
     {

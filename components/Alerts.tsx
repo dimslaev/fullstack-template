@@ -8,7 +8,6 @@ export const ErrorAlert = ({
   ...rest
 }: React.ComponentProps<typeof Snackbar>) => (
   <Snackbar
-    color="danger"
     variant="solid"
     anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
     startDecorator={<ErrorOutlineIcon />}
@@ -23,7 +22,6 @@ export const SuccessAlert = ({
   ...rest
 }: React.ComponentProps<typeof Snackbar>) => (
   <Snackbar
-    color="success"
     variant="solid"
     anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
     startDecorator={<CheckCircleOutlineIcon />}
@@ -38,7 +36,6 @@ export const InfoAlert = ({
   ...rest
 }: React.ComponentProps<typeof Snackbar>) => (
   <Snackbar
-    color="neutral"
     variant="solid"
     anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
     startDecorator={<HelpOutlineIcon />}

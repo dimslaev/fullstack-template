@@ -8,10 +8,11 @@ import { Layout } from "@/components/layout/Layout";
 import { AuthFormBox } from "@/components/layout/AuthFormBox";
 import { Link } from "@/components/Link";
 import { Button, Stack, Input, Typography } from "@mui/joy";
+import { ErrorAlert } from "@/components/Alerts";
 
 const SignupForm = () => {
   const { signup } = useAuth();
-
+  console.log(signup.error, signup.error?.message);
   return (
     <Layout>
       <AuthFormBox title="Signup">
@@ -50,6 +51,12 @@ const SignupForm = () => {
           )}
         </Form>
       </AuthFormBox>
+
+      <ErrorAlert open={signup.isError} onClose={signup.reset}>
+        {signup.error?.message === "exists"
+          ? "You already have an account. Please sign in."
+          : "There was an error."}
+      </ErrorAlert>
     </Layout>
   );
 };

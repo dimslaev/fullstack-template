@@ -17,6 +17,14 @@ export default async function handler(
     return res.status(400).json({});
   }
 
+  const existingUser = await prisma.user.findUnique({
+    where: { email: req.body.email as string },
+  });
+
+  if (existingUser) {
+    return res.status(400).send("exists");
+  }
+
   try {
     const user = await prisma.user.create({
       data: {

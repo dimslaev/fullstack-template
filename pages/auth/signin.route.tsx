@@ -8,6 +8,7 @@ import { Layout } from "@/components/layout/Layout";
 import { AuthFormBox } from "@/components/layout/AuthFormBox";
 import { Link } from "@/components/Link";
 import { Button, Stack, Input, Typography } from "@mui/joy";
+import { ErrorAlert } from "@/components/Alerts";
 
 const SigninForm = () => {
   const { signin } = useAuth();
@@ -53,6 +54,9 @@ const SigninForm = () => {
           )}
         </Form>
       </AuthFormBox>
+      <ErrorAlert open={signin.isError} onClose={signin.reset}>
+        Please check your email and/or password.
+      </ErrorAlert>
     </Layout>
   );
 };
